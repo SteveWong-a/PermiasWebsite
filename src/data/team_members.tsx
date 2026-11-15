@@ -144,6 +144,24 @@ export function getOfficerTeam(role: string, team?: string): string {
   return "General Officers";
 }
 
+export function getRolePriority(role: string): number {
+  const r = role.toLowerCase().trim();
+  if (r.includes("president") && !r.includes("vice")) return 0;
+  if (r.includes("vice president")) return 1;
+  if (r.includes("director") || r.includes("lead") || r.includes("head") || r.includes("chair")) return 2;
+  if (r.includes("secretary")) return 3;
+  if (r.includes("treasurer")) return 4;
+  return 5;
+}
+
+export function sortOfficersLeaderFirst(officers: Officer[]): Officer[] {
+  return [...officers].sort((a, b) => {
+    const prioDiff = getRolePriority(a.role) - getRolePriority(b.role);
+    if (prioDiff !== 0) return prioDiff;
+    return (a.display_order ?? 0) - (b.display_order ?? 0);
+  });
+}
+
 export function convertTeamMemberToOfficer(m: TeamMember, index: number): Officer {
   return {
     id: `static-${m.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${index}`,
@@ -165,7 +183,7 @@ export function convertTeamMemberToOfficer(m: TeamMember, index: number): Office
 export const teamMembers: TeamMember[] = [
   // 1. Executives
   {
-    name: "Cherish",
+    name: "Cherish Yulius",
     role: "President",
     team: "Executive Board",
     bio: "President of PERMIAS UIUC for the 2025–2026 academic year. Dedicated to empowering the Indonesian student community at UIUC, elevating cultural awareness across campus, and fostering meaningful connections across North America.",
@@ -175,7 +193,7 @@ export const teamMembers: TeamMember[] = [
     linkedin: "https://www.linkedin.com/company/permias-uiuc/",
   },
   {
-    name: "Valiant",
+    name: "Valiant Setyoputro",
     role: "Vice President Internal",
     team: "Executive Board",
     bio: "Vice President Internal of PERMIAS UIUC. Overseeing internal committee operations, team synergy, board welfare, and community initiatives.",
@@ -185,7 +203,7 @@ export const teamMembers: TeamMember[] = [
     linkedin: "https://www.linkedin.com/company/permias-uiuc/",
   },
   {
-    name: "Aurel",
+    name: "Aurelia Sitanggang",
     role: "Vice President External",
     team: "Executive Board",
     bio: "Vice President External of PERMIAS UIUC. Coordinating outreach with external student organizations, UIUC administration, and global Indonesian diaspora networks.",
@@ -205,7 +223,7 @@ export const teamMembers: TeamMember[] = [
     linkedin: "https://www.linkedin.com/company/permias-uiuc/",
   },
   {
-    name: "James",
+    name: "Justin Yuwono",
     role: "Treasurer",
     team: "Executive Board",
     bio: "Treasurer of PERMIAS UIUC. Directing organizational budgeting, financial allocations, event funding, and audit transparency.",
@@ -239,7 +257,7 @@ export const teamMembers: TeamMember[] = [
 
   // 3. Membership
   {
-    name: "Barra",
+    name: "Barra Budiyono",
     role: "Director of Membership",
     team: "Membership",
     bio: "Director of Membership. Championing community engagement, incoming student orientations, and student integration at Illinois.",
@@ -249,7 +267,7 @@ export const teamMembers: TeamMember[] = [
     linkedin: "https://www.linkedin.com/company/permias-uiuc/",
   },
   {
-    name: "Jotam",
+    name: "Jonathan Tamboto",
     role: "Membership Officer",
     team: "Membership",
     bio: "Membership committee officer. Creating warm, inclusive spaces and peer mentorship for Indonesian Illini.",
@@ -269,7 +287,7 @@ export const teamMembers: TeamMember[] = [
     linkedin: "https://www.linkedin.com/company/permias-uiuc/",
   },
   {
-    name: "Rainier",
+    name: "Rainier Harsono",
     role: "Membership Officer",
     team: "Membership",
     bio: "Membership committee officer. Dedicated to building friendships and community spirit among undergraduate and graduate members.",
@@ -323,7 +341,7 @@ export const teamMembers: TeamMember[] = [
 
   // 5. Fundraising
   {
-    name: "Ethan",
+    name: "Ethan Chang",
     role: "Director of Fundraising",
     team: "Fundraising",
     bio: "Director of Fundraising. Coordinating culinary pop-ups (Indomie, Sate, Indonesian snacks), merchandise lines, and community fundraisers.",
@@ -343,7 +361,7 @@ export const teamMembers: TeamMember[] = [
     linkedin: "https://www.linkedin.com/company/permias-uiuc/",
   },
   {
-    name: "Josias",
+    name: "Josias Nathaniel Limit",
     role: "Fundraising Officer",
     team: "Fundraising",
     bio: "Fundraising officer. Managing logistics and operations for food sales and seasonal merchandise campaigns.",
@@ -353,7 +371,7 @@ export const teamMembers: TeamMember[] = [
     linkedin: "https://www.linkedin.com/company/permias-uiuc/",
   },
   {
-    name: "Saila",
+    name: "Saila Nataatmadja",
     role: "Fundraising Officer",
     team: "Fundraising",
     bio: "Fundraising officer. Engaging the campus community through delicious Indonesian delicacies and festive sales.",
@@ -365,7 +383,7 @@ export const teamMembers: TeamMember[] = [
 
   // 6. Tech Team
   {
-    name: "Steve",
+    name: "Steve Wong",
     role: "Tech Team Lead",
     team: "Tech Team",
     bio: "Tech Team lead for PERMIAS UIUC. Developing web experiences, event tools, dynamic dashboards, and digital infrastructure for the Indonesian student community.",
